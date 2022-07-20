@@ -1,6 +1,7 @@
 ## Fibonacci series :
 
 - n = fibo(n-1) + fibo(n-2)
+- TC = O(2 ^ n) , SC = O(n)
 
 ```cpp
 #include <bits/stdc++.h>
