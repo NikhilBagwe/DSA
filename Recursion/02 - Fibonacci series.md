@@ -1,7 +1,6 @@
-## Fibonacci series :
+## Fibonacci series : TC = O(2 ^ n) i.e exponential , SC = O(n)
 
 - n = fibo(n-1) + fibo(n-2)
-- TC = O(2 ^ n) , SC = O(n)
 
 ```cpp
 #include <bits/stdc++.h>
@@ -23,6 +22,25 @@ int main()
     cout<<"Enter number : ";
     cin>>n;
     
+    cout<<fibo(n);
+
+    return 0;
+}
+```
+
+## Concise code :
+
+```cpp
+int fibo(int n){
+    // If n is '1 or 0' , just return n.
+    if(n <= 1) return n;
+    
+    return fibo(n-1) + fibo(n-2);
+}
+
+int main()
+{
+    int n = 4;
     cout<<fibo(n);
 
     return 0;
