@@ -42,7 +42,8 @@ public:
 };
 ```
 
-## BETTER : TC = (2^n) * n = Recursion * Time taken to put ds into ans
+## BETTER : 
+## TC = (2^n) * n = Recursion * Time taken to put ds into ans
 ## SC = O(2^n * k) = to store every subset of average length k. Auxiliary space is O(n)  if n is the depth of the recursion tree.
 
 - Similar to Combination sum 2.
