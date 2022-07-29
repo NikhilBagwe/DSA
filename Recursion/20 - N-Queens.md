@@ -1,0 +1,75 @@
+## BRUTE :
+
+- Here we are performing a lot of O(n) operations in isSafe() as well as solve() functions taking lot of time.
+```cpp
+class Solution {
+public:
+    bool isSafe(int row, int col, vector<string> board, int n){
+        int dupRow = row;
+        int dupCol = col;
+        
+        // Check for Upper left diagonal
+        while(row >= 0 && col >= 0){
+            if(board[row][col] == 'Q') return false;
+            // Keep moving upwards. Thus row and col will decrease
+            row--;
+            col--;
+        }
+        
+        row = dupRow;
+        col = dupCol;
+        
+        // Check for Left direction
+        while(col >= 0){
+            if(board[row][col] == 'Q') return false;
+            // Since we are moving left, row will remain constant, only col will change
+            col--;
+        }
+        
+        col = dupCol;
+        // Check for Lower left diagonal 
+        while(row < n && col >= 0){
+            if(board[row][col] == 'Q') return false;
+            // Column is going left & row is increasing
+            row++;
+            col--;
+        }
+        
+        return true;
+    }
+    
+public:
+    void solve(int col, vector<string> &board, vector<vector<string>> &ans, int n){
+        // If we reach last column, means we have an answer in 'board'
+        if(col == n){
+            ans.push_back(board);
+            return;
+        }
+        
+        // Check for every row of the column, whether Q can be placed
+        for(int row = 0; row < n; row++){
+            // If it is safe to place Q in that row, than simply insert Q there & move to next column.
+            if(isSafe(row, col, board, n)){
+                board[row][col] = 'Q';
+                solve(col+1, board, ans, n);
+                // Backtrack by removing 'Q'
+                board[row][col] = '.';
+            }
+        }
+    }
+ public:   
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> ans;
+        vector<string> board(n);
+        // Creating an empty string of size 'n' filled with '.' at all places
+        string s(n, '.');
+        
+        // Creating a board of n*n size by inserting string at every index of 'board' vector
+        for(int i = 0; i < n; i++) board[i] = s;
+        
+        solve(0, board, ans, n);
+        
+        return ans;
+    }
+};
+```
