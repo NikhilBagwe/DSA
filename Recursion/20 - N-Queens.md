@@ -73,3 +73,55 @@ public:
     }
 };
 ```
+
+## OPTIMAL : TC = O(n! * n)
+
+- Here instead of checking left row, upper and lower diagonal everytime, we are maintaining a hashmap of them.
+- Check this article [TakeuForward](https://takeuforward.org/data-structure/n-queen-problem-return-all-distinct-solutions-to-the-n-queens-puzzle/) for optimized approach explanation.
+
+```cpp
+class Solution {
+public:
+    void solve(int col, vector<string> &board, vector<vector<string>> &ans, vector<int> &leftRow, 
+               vector<int> &upperDiagonal, 
+               vector<int> &lowerDiagonal, int n)
+    {
+        if(col == n){
+            ans.push_back(board);
+            return;
+        }
+        
+        for(int row = 0; row < n; row++){
+            // This check makes sure that an Queen was never placed in left row, upper & left diagonal
+            if(leftRow[row] == 0 && lowerDiagonal[row + col] == 0 && upperDiagonal[n-1 + col - row] == 0){
+                board[row][col] = 'Q';
+                // On filling a Queen, mark the hashmaps as '1'
+                leftRow[row] = 1;
+                lowerDiagonal[row + col] = 1; 
+                upperDiagonal[n-1 + col - row] = 1;
+                
+                solve(col+1, board, ans, leftRow, upperDiagonal, lowerDiagonal, n);
+                
+                // Backtrack
+                board[row][col] = '.';
+                leftRow[row] = 0;
+                lowerDiagonal[row + col] = 0; 
+                upperDiagonal[n-1 + col - row] = 0;
+            }
+        }
+    }
+ public:   
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> ans;
+        vector<string> board(n);
+        string s(n, '.');
+        
+        for(int i = 0; i < n; i++) board[i] = s;
+        
+        vector<int> leftRow(n, 0), upperDiagonal(2*n - 1, 0), lowerDiagonal(2*n - 1, 0);
+        solve(0, board, ans, leftRow, upperDiagonal, lowerDiagonal, n);
+        
+        return ans;
+    }
+};
+```
