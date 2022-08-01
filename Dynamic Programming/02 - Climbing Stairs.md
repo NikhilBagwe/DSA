@@ -1,6 +1,10 @@
 ## Count Ways To Reach The N-th Stairs - Similar to Fibonacci Series
 ## Recursion : Count Pattern
 
+- Since we are using the count pattern we return '1' everytime we reach '0th' stair.
+- But, there will be one more edge-case when n=1, if we call f(n-2) we will reach stair numbered -1 which is not defined, therefore we add an extra test case to return 1 when n=1.
+- Thus we write -> if(n <= 1) return 1; i.e return 1 when we reach 0 or 1
+
 ```cpp
 class Solution {
 public:
