@@ -57,3 +57,48 @@ int frogJump(int n, vector<int> &heights)
     return ans;
 }
 ```
+
+## Tabulation :
+
+```cpp
+int frogJump(int n, vector<int> &heights)
+{
+    vector<int> dp(n+1, -1);  
+    dp[0] = 0;  // Base case
+    
+    for(int i = 1; i < n; i++){
+        int jumpOne = dp[i-1] + abs(heights[i] - heights[i-1]);
+        
+        int jumpTwo = INT_MAX;
+        if(i > 1) jumpTwo = dp[i-2] + abs(heights[i] - heights[i-2]);
+        
+        dp[i] = min(jumpOne, jumpTwo);
+    }
+    
+    return dp[n-1];  // Final ans will always be stored at last index
+}
+```
+
+## Space Optimization :
+
+```cpp
+int frogJump(int n, vector<int> &heights)
+{
+    int prev = 0;  
+    int prev2 = 0;
+    
+    for(int i = 1; i < n; i++){
+        int jumpOne = prev + abs(heights[i] - heights[i-1]);
+        
+        int jumpTwo = INT_MAX;
+        if(i > 1) jumpTwo = prev2 + abs(heights[i] - heights[i-2]);
+        
+        int cur = min(jumpOne, jumpTwo);
+        
+        prev2 = prev;
+        prev = cur;
+    }
+    
+    return prev;  
+}
+```
